@@ -43,7 +43,7 @@ public class TodoService {
         if(todoRequest.getCompleted() != null) {
             todoEntity.setCompleted(todoRequest.getCompleted());
         }
-        return todoEntity;
+        return this.todoRepository.save(todoEntity);
     }
 
     public void removeByID(Long id) {
