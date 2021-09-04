@@ -1,7 +1,7 @@
 package com.gmail.juyonglee0208.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gmail.juyonglee0208.model.TodoEntity;
+import com.gmail.juyonglee0208.model.TodoModel;
 import com.gmail.juyonglee0208.model.TodoRequest;
 import com.gmail.juyonglee0208.service.TodoService;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,11 +27,11 @@ class TodoControllerTest {
     @MockBean
     TodoService todoService;
 
-    private TodoEntity expected;
+    private TodoModel expected;
 
     @BeforeEach
     void setup() {
-        this.expected = new TodoEntity();
+        this.expected = new TodoModel();
         expected.setId(123L);
         expected.setTitle("Test Title");
         expected.setOrder(0L);
@@ -42,7 +42,7 @@ class TodoControllerTest {
     void create() throws Exception {
         when(this.todoService.add(any(TodoRequest.class))).then((i) -> {
             TodoRequest request = i.getArgument(0, TodoRequest.class);
-            return new TodoEntity(this.expected.getId(), request.getTitle(), this.expected.getOrder(), this.expected.getCompleted());
+            return new TodoModel(this.expected.getId(), request.getTitle(), this.expected.getOrder(), this.expected.getCompleted());
         });
         TodoRequest request = new TodoRequest();
         request.setTitle("Any Title");

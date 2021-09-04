@@ -1,6 +1,6 @@
 package com.gmail.juyonglee0208.service;
 
-import com.gmail.juyonglee0208.model.TodoEntity;
+import com.gmail.juyonglee0208.model.TodoModel;
 import com.gmail.juyonglee0208.model.TodoRequest;
 import com.gmail.juyonglee0208.repository.TodoRepository;
 import lombok.AllArgsConstructor;
@@ -16,34 +16,34 @@ public class TodoService {
 
     private final TodoRepository todoRepository;
 
-    public TodoEntity add(TodoRequest request) {
-        TodoEntity todoEntity = new TodoEntity();
-        todoEntity.setTitle(request.getTitle());
-        todoEntity.setOrder(request.getOrder());
-        todoEntity.setCompleted(request.getCompleted());
-        return this.todoRepository.save(todoEntity);
+    public TodoModel add(TodoRequest request) {
+        TodoModel todoModel = new TodoModel();
+        todoModel.setTitle(request.getTitle());
+        todoModel.setOrder(request.getOrder());
+        todoModel.setCompleted(request.getCompleted());
+        return this.todoRepository.save(todoModel);
     }
 
-    public TodoEntity searchByID(long id) {
+    public TodoModel searchByID(long id) {
         return this.todoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)) ;
     }
 
-    public List<TodoEntity> searchAll() {
+    public List<TodoModel> searchAll() {
         return this.todoRepository.findAll();
     }
 
-    public TodoEntity updateByID(Long id, TodoRequest todoRequest) {
-        TodoEntity todoEntity = this.searchByID(id);
+    public TodoModel updateByID(Long id, TodoRequest todoRequest) {
+        TodoModel todoModel = this.searchByID(id);
         if(todoRequest.getTitle() != null) {
-            todoEntity.setTitle(todoRequest.getTitle());
+            todoModel.setTitle(todoRequest.getTitle());
         }
         if(todoRequest.getOrder() != null) {
-            todoEntity.setOrder(todoRequest.getOrder());
+            todoModel.setOrder(todoRequest.getOrder());
         }
         if(todoRequest.getCompleted() != null) {
-            todoEntity.setCompleted(todoRequest.getCompleted());
+            todoModel.setCompleted(todoRequest.getCompleted());
         }
-        return this.todoRepository.save(todoEntity);
+        return this.todoRepository.save(todoModel);
     }
 
     public void removeByID(Long id) {

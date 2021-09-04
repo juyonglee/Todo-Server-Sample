@@ -1,6 +1,6 @@
 package com.gmail.juyonglee0208.service;
 
-import com.gmail.juyonglee0208.model.TodoEntity;
+import com.gmail.juyonglee0208.model.TodoModel;
 import com.gmail.juyonglee0208.model.TodoRequest;
 import com.gmail.juyonglee0208.repository.TodoRepository;
 import org.junit.jupiter.api.Assertions;
@@ -10,12 +10,10 @@ import org.mockito.AdditionalAnswers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
@@ -32,28 +30,28 @@ class TodoServiceTest {
 
     @Test
     void add() {
-        when(this.todoRepository.save(any(TodoEntity.class))).then(AdditionalAnswers.returnsFirstArg());
+        when(this.todoRepository.save(any(TodoModel.class))).then(AdditionalAnswers.returnsFirstArg());
 
         TodoRequest expected = new TodoRequest();
         expected.setTitle("Test Title");
-        TodoEntity actual = this.todoService.add(expected);
+        TodoModel actual = this.todoService.add(expected);
 
         Assertions.assertEquals(expected.getTitle(), actual.getTitle());
     }
 
     @Test
     void searchByID() {
-        TodoEntity todoEntity = new TodoEntity();
-        todoEntity.setId(123L);
-        todoEntity.setTitle("Title");
-        todoEntity.setOrder(0L);
-        todoEntity.setCompleted(false);
-        Optional<TodoEntity> optional = Optional.of(todoEntity);
+        TodoModel todoModel = new TodoModel();
+        todoModel.setId(123L);
+        todoModel.setTitle("Title");
+        todoModel.setOrder(0L);
+        todoModel.setCompleted(false);
+        Optional<TodoModel> optional = Optional.of(todoModel);
 
         given(this.todoRepository.findById(anyLong())).willReturn(optional);
 
-        TodoEntity actual = this.todoService.searchByID(123L);
-        TodoEntity expected = optional.get();
+        TodoModel actual = this.todoService.searchByID(123L);
+        TodoModel expected = optional.get();
 
         Assertions.assertEquals(expected.getId(), actual.getId());
         Assertions.assertEquals(expected.getTitle(), actual.getTitle());
