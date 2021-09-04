@@ -51,5 +51,5 @@ class TodoControllerTest {
 
         this.mvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content(content)).andExpect(status().isOk()).andExpect(jsonPath("$.title").value("Any Title"));
     }
-     
+
 }
